@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Velha</title>
+    <style>
+        body {
+            background-color: rgb(1, 9, 20);
+            color: white;
+            margin: auto;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        main {
+            width: 600px;
+            height: 600px;
+            margin: auto;
+            text-align: center;
+        }
+
+        div {
+            margin: auto;
+            text-align: center;
+            color: black;
+            font-size: 8rem;
+        }
+
+        .linha {
+            height: 150px;
+        }
+
+        .coluna {
+            height: 100%;
+            width: 150px;
+            background-color: white;
+            float: left;
+            border: 5px solid black;
+        }
+
+        #botao-resetar-jogo {
+            height: auto;
+            width: 10rem;
+            padding: 1rem;
+            text-transform: uppercase;
+            font-size: 1.5em;
+        }
+
+        #resultado-vencedor {
+            font-size: 1.5em;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+
+        <div class="linha">
+            <div class="coluna" id="coluna1" onclick="javascript: setCell(1)"></div>
+            <div class="coluna" id="coluna2" onclick="javascript: setCell(2)"></div>
+            <div class="coluna" id="coluna3" onclick="javascript: setCell(3)"></div>
+        </div>
+        <div class="linha">
+            <div class="coluna" id="coluna4" onclick="javascript: setCell(4)"></div>
+            <div class="coluna" id="coluna5" onclick="javascript: setCell(5)"></div>
+            <div class="coluna" id="coluna6" onclick="javascript: setCell(6)"></div>
+        </div>
+        <div class="linha">
+            <div class="coluna" id="coluna7" onclick="javascript: setCell(7)"></div>
+            <div class="coluna" id="coluna8" onclick="javascript: setCell(8)"></div>
+            <div class="coluna" id="coluna9" onclick="javascript: setCell(9)"></div>
+        </div>
+
+    </main>
+
+    <input id="botao-resetar-jogo" type="button" value="resetar" onclick="resetar()">
+    <hr>
+    <div id="resultado-vencedor">
+        <p>Aguardando Jogada.</p>
+    </div>
+</body>
+
+
+<script>
+    var vencedor = "";
+    var vez = 1;
+    var cont = 1;
+
+    function resetar() {
+        for (cont = 1; cont <= 9; cont++) {
+            let position = "div#coluna" + cont
+            document.querySelector(position).innerHTML = ""
+            document.getElementById("resultado-vencedor").innerHTML = "Aguardando Jogada."
+        }
+        vez = 1;
+        cont = 1;
+    }
+
+    setCell = function (pos) {
+        let position = "div#coluna" + pos
+        if (vez == 1) {
+            document.querySelector(position).innerHTML = "X"
+            vez += 1;
+
+        } else if (vez == 2) {
+            document.querySelector(position).innerHTML = "O"
+            vez = 1;
+        }
+
+        linhaCompleta();
+        colunaCompleta();
+        diagonalCompleta();
+    }
+
+    linhaCompleta = function () {
+        cont = 1
+
+        for (cont = 1; cont < 9; cont += 3) {
+
+            if (document.getElementById("coluna"+cont).innerHTML == "X" && document.getElementById("coluna"+(cont+1)).innerHTML == "X" && document.getElementById("coluna"+(cont+2)).innerHTML == "X") {
+                
+                var vencedor = "Jogador X"
+                document.getElementById("resultado-vencedor").innerHTML = `O vencedor foi: ${vencedor}`
+            }
+
+            if (document.getElementById("coluna"+cont).innerHTML == "O" && document.getElementById("coluna"+(cont+1)).innerHTML == "O" && document.getElementById("coluna"+(cont+2)).innerHTML == "O") {
+                var vencedor = "Jogador O"
+                document.getElementById("resultado-vencedor").innerHTML = `O vencedor foi: ${vencedor}`
+            }
+        }
+
+    }
+
+    colunaCompleta = function () {
+        cont = 1
+
+        for (cont = 1; cont < 5; cont += 1) {
+
+            if (document.getElementById("coluna"+cont).innerHTML == "X" && document.getElementById("coluna"+(cont+3)).innerHTML == "X" && document.getElementById("coluna"+(cont+6)).innerHTML == "X") {
+                var vencedor = "Jogador X"
+                document.getElementById("resultado-vencedor").innerHTML = `O vencedor foi: ${vencedor}`
+            }
+            
+            if (document.getElementById("coluna"+cont).innerHTML == "O" && document.getElementById("coluna"+(cont+3)).innerHTML == "O" && document.getElementById("coluna"+(cont+6)).innerHTML == "O") {
+                var vencedor = "Jogador O"
+                document.getElementById("resultado-vencedor").innerHTML = `O vencedor foi: ${vencedor}`
+            }
+        }
+
+    }
+
+    diagonalCompleta = function () {
+        cont = 1
+
+            if (document.getElementById("coluna1").innerHTML == "X" && document.getElementById("coluna5").innerHTML == "X" && document.getElementById("coluna9").innerHTML == "X" || 
+                document.getElementById("coluna3").innerHTML == "X" && document.getElementById("coluna5").innerHTML == "X" && document.getElementById("coluna7").innerHTML == "X" ) {
+                var vencedor = "Jogador X"
+                document.getElementById("resultado-vencedor").innerHTML = `O vencedor foi: ${vencedor}`
+            }
+
+            if (document.getElementById("coluna1").innerHTML == "O" && document.getElementById("coluna5").innerHTML == "O" && document.getElementById("coluna9").innerHTML == "O" || 
+                document.getElementById("coluna3").innerHTML == "O" && document.getElementById("coluna5").innerHTML == "O" && document.getElementById("coluna7").innerHTML == "O" ) {
+                var vencedor = "Jogador O"
+                document.getElementById("resultado-vencedor").innerHTML = `O vencedor foi: ${vencedor}`
+            }
+            
+
+    
+    }
+</script>
+
+</html>
