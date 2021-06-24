@@ -4,19 +4,38 @@ var cont = 1;
 var empate = 0;
 var jogador = "Jogador 2";
 var nomes = ["Jogador 1", "Jogador 2"]
-var placar = [0,0]
+var placar = [0, 0]
 
-nomes[0] = window.prompt("Nome do Jogador 1 (X): ")
-nomes[1] = window.prompt("Nome do Jogador 2 (O): ")
+nomes[0] = "" //window.prompt("Nome do Jogador 1 (X): ")
+nomes[1] = "" //window.prompt("Nome do Jogador 2 (O): ")
 
-if(nomes[0] == ""){
+if (nomes[0] == "") {
     nomes[0] = "Jogador Convidado X";
 }
 
-if(nomes[1] == ""){
+if (nomes[1] == "") {
     nomes[1] = "Jogador Convidado O";
 }
 
+
+document.addEventListener("DOMContentLoaded", function () {
+    placarPontos = function () {
+        document.getElementById("jogador1").innerHTML = nomes[0] + `:  ` + placar[0]
+        document.getElementById("jogador2").innerHTML = nomes[1] + `:  ` + placar[1]
+    }
+    placarPontos();
+});
+
+
+// Espera o documento carregar todo o HTML da pagina para poder procurar o id jogador1.2
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("jogador1").innerHTML = nomes[0]
+    document.getElementById("jogador2").innerHTML = nomes[1]
+});
+
+
+
+//
 function resetar() {
     for (cont = 1; cont <= 9; cont++) {
         let position = "div#coluna" + cont
@@ -47,12 +66,14 @@ setCell = function (pos) {
     colunaCompleta();
     diagonalCompleta();
     empateCompleto();
+
 }
+
 
 empateCompleto = function () {
     for (cont = 1; cont <= 9; cont += 1) {
         let position = "div#coluna" + cont
-        if (vencedor =="" && document.querySelector(position).innerHTML == "X" || document.querySelector(position).innerHTML == "O") {
+        if (vencedor == "" && document.querySelector(position).innerHTML == "X" || document.querySelector(position).innerHTML == "O") {
             empate++;
         }
 
@@ -72,7 +93,7 @@ linhaCompleta = function () {
         }
 
         if (document.getElementById("coluna" + cont).innerHTML == "O" && document.getElementById("coluna" + (cont + 1)).innerHTML == "O" && document.getElementById("coluna" + (cont + 2)).innerHTML == "O") {
-            var vencedor = nomes[01]
+            var vencedor = nomes[1]
             document.getElementById("resultado-vencedor").innerHTML = `O vencedor foi: ${vencedor}`
         }
     }
@@ -84,11 +105,13 @@ colunaCompleta = function () {
         if (document.getElementById("coluna" + cont).innerHTML == "X" && document.getElementById("coluna" + (cont + 3)).innerHTML == "X" && document.getElementById("coluna" + (cont + 6)).innerHTML == "X") {
             var vencedor = nomes[0]
             document.getElementById("resultado-vencedor").innerHTML = `O vencedor foi: ${vencedor}`
+            placar[0] += 1;
         }
 
         if (document.getElementById("coluna" + cont).innerHTML == "O" && document.getElementById("coluna" + (cont + 3)).innerHTML == "O" && document.getElementById("coluna" + (cont + 6)).innerHTML == "O") {
             var vencedor = nomes[1]
             document.getElementById("resultado-vencedor").innerHTML = `O vencedor foi: ${vencedor}`
+            placar[1] += 1;
         }
     }
 }
@@ -106,3 +129,5 @@ diagonalCompleta = function () {
         document.getElementById("resultado-vencedor").innerHTML = `O vencedor foi: ${vencedor}`
     }
 }
+
+
